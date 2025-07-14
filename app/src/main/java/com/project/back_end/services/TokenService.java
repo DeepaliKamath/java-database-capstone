@@ -1,5 +1,6 @@
 package com.project.back_end.services;
 
+@Component
 public class TokenService {
 // 1. **@Component Annotation**
 // The @Component annotation marks this class as a Spring component, meaning Spring will manage it as a bean within its application context.
@@ -9,7 +10,15 @@ public class TokenService {
 // The constructor injects dependencies for `AdminRepository`, `DoctorRepository`, and `PatientRepository`,
 // allowing the service to interact with the database and validate users based on their role (admin, doctor, or patient).
 // Constructor injection ensures that the class is initialized with all required dependencies, promoting immutability and making the class testable.
+private AdminRepository adminRepository;
+ private DoctorRepository doctorRepository;
+ private PatientRepository patientRepository;
 
+  public TokenService( AdminRepository adminRepository, DoctorRepository doctorRepository, PatientRepository patientRepository){
+  this.adminRepository = adminRepository;
+   this.doctorRepository = doctorRepository;
+    this.patientRepository = patientRepository;
+  }
 // 3. **getSigningKey Method**
 // This method retrieves the HMAC SHA key used to sign JWT tokens.
 // It uses the `jwt.secret` value, which is provided from an external source (like application properties).
