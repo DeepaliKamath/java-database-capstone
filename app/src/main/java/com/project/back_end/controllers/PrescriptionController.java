@@ -1,5 +1,6 @@
 package com.project.back_end.controllers;
 
+@RestController
 public class PrescriptionController {
     
 // 1. Set Up the Controller Class:
@@ -12,7 +13,12 @@ public class PrescriptionController {
 //    - Inject `PrescriptionService` to handle logic related to saving and fetching prescriptions.
 //    - Inject the shared `Service` class for token validation and role-based access control.
 //    - Inject `AppointmentService` to update appointment status after a prescription is issued.
-
+    @autowire
+    private PrescriptionService prescriptionService;
+    @autowire
+    private Service service;
+    @autowire
+    private AppointmentService appointmentService;
 
 // 3. Define the `savePrescription` Method:
 //    - Handles HTTP POST requests to save a new prescription for a given appointment.
@@ -20,7 +26,12 @@ public class PrescriptionController {
 //    - Validates the token for the `"doctor"` role.
 //    - If the token is valid, updates the status of the corresponding appointment to reflect that a prescription has been added.
 //    - Delegates the saving logic to `PrescriptionService` and returns a response indicating success or failure.
-
+    @PostMapping("/{token}")
+    private  ResponseEntity<Map<String, String>> savePrescription(String token, String prescription){
+        if(service.validateToken()){
+            prescriptionService.savePrescription();
+        }
+    }
 
 // 4. Define the `getPrescription` Method:
 //    - Handles HTTP GET requests to retrieve a prescription by its associated appointment ID.
@@ -28,6 +39,10 @@ public class PrescriptionController {
 //    - Validates the token for the `"doctor"` role using the shared service.
 //    - If the token is valid, fetches the prescription using the `PrescriptionService`.
 //    - Returns the prescription details or an appropriate error message if validation fails.
-
-
+@GetMapping("/{appointmentId}/{token}")
+    private ResponseEntity<Map<String, String>> getPrescriptionByAppointmentId(long appointmentId, String token){
+        if(service.validateToken()){
+            prescriptionService.getPrescription()
+        }
+    }
 }
