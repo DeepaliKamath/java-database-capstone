@@ -1,6 +1,6 @@
 package com.project.back_end.controllers;
 
-
+@RestController
 public class DoctorController {
 
 // 1. Set Up the Controller Class:
@@ -13,25 +13,38 @@ public class DoctorController {
 //    - Inject `DoctorService` for handling the core logic related to doctors (e.g., CRUD operations, authentication).
 //    - Inject the shared `Service` class for general-purpose features like token validation and filtering.
 
+    @autowire
+    private Service service;
+    @autowire
+    private DoctorService doctorService;
 
 // 3. Define the `getDoctorAvailability` Method:
 //    - Handles HTTP GET requests to check a specific doctor’s availability on a given date.
 //    - Requires `user` type, `doctorId`, `date`, and `token` as path variables.
 //    - First validates the token against the user type.
 //    - If the token is invalid, returns an error response; otherwise, returns the availability status for the doctor.
-
+@GetMapping
+  private ResponseEntity<Map<String, String>> getDoctorAvailability(long doctorId,LocaDate date,String token){
+  }
 
 // 4. Define the `getDoctor` Method:
 //    - Handles HTTP GET requests to retrieve a list of all doctors.
 //    - Returns the list within a response map under the key `"doctors"` with HTTP 200 OK status.
-
+@GetMapping
+  private ResponseEntity<Map<String, String>> getDoctor(long doctorId,String token){
+  }
 
 // 5. Define the `saveDoctor` Method:
 //    - Handles HTTP POST requests to register a new doctor.
 //    - Accepts a validated `Doctor` object in the request body and a token for authorization.
 //    - Validates the token for the `"admin"` role before proceeding.
 //    - If the doctor already exists, returns a conflict response; otherwise, adds the doctor and returns a success message.
-
+@PostMapping
+  private ResponseEntity<Map<String, String>> getDoctor(long doctorId, String token){
+    if(service.validateToken()){
+            doctorService.save();
+        }
+  }
 
 // 6. Define the `doctorLogin` Method:
 //    - Handles HTTP POST requests for doctor login.
@@ -44,13 +57,23 @@ public class DoctorController {
 //    - Accepts a validated `Doctor` object and a token for authorization.
 //    - Token must belong to an `"admin"`.
 //    - If the doctor exists, updates the record and returns success; otherwise, returns not found or error messages.
-
+@PutMapping
+  private ResponseEntity<Map<String, String>> updateDoctor(long doctorId, String token){
+    if(service.validateToken()){
+            doctorService.save();
+        }
+  }
 
 // 8. Define the `deleteDoctor` Method:
 //    - Handles HTTP DELETE requests to remove a doctor by ID.
 //    - Requires both doctor ID and an admin token as path variables.
 //    - If the doctor exists, deletes the record and returns a success message; otherwise, responds with a not found or error message.
-
+@DeleteMapping
+  private ResponseEntity<Map<String, String>> deleteDoctor(long doctorId, String token){
+    if(service.validateToken()){
+            doctorService.delete();
+        }
+  }
 
 // 9. Define the `filter` Method:
 //    - Handles HTTP GET requests to filter doctors based on name, time, and specialty.
