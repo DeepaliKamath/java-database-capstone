@@ -1,5 +1,6 @@
 package com.project.back_end.services;
 
+@Service
 public class DoctorService {
 
 // 1. **Add @Service Annotation**:
@@ -11,7 +12,9 @@ public class DoctorService {
 //    - The `DoctorService` class depends on `DoctorRepository`, `AppointmentRepository`, and `TokenService`.
 //    - These dependencies should be injected via the constructor for proper dependency management.
 //    - Instruction: Ensure constructor injection is used for injecting dependencies into the service.
-
+private DoctorRepository doctorRepository ;
+   private AppointmentRepository appointmentRepository;
+   private TokenService tokenService;
 // 3. **Add @Transactional Annotation for Methods that Modify or Fetch Database Data**:
 //    - Methods like `getDoctorAvailability`, `getDoctors`, `findDoctorByName`, `filterDoctorsBy*` should be annotated with `@Transactional`.
 //    - The `@Transactional` annotation ensures that database operations are consistent and wrapped in a single transaction.
